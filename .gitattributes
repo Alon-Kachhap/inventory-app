@@ -1,0 +1,6 @@
+# Normalize all text files to LF in the repo
+* text eol=lf
+
+# binary exceptions if needed later, e.g.:
+# *.png binary
+# *.jpg binary
