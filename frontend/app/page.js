@@ -6,6 +6,10 @@ import { fetchJSON } from "../lib/api"
 export default function Home() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const grandTotal = items.reduce(
+    (sum, item) => sum + item.qty * item.price,
+    0
+  );
 
   // form state
   const [name, setName] = useState("");
@@ -56,7 +60,12 @@ export default function Home() {
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-black">Inventory Dashboard</h1>
-
+        <p className="mb-6 text-gray-700">
+          Total inventory value:{""}
+          <span className="font-mono font-semibold">
+            ₹ {grandTotal.toFixed(2)}
+          </span>
+        </p>
         <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-6">
           <input required value={name} onChange={e => setName(e.target.value)}
             className="p-2 border rounded text-gray-400" placeholder="Item name" />
@@ -75,7 +84,11 @@ export default function Home() {
               <div key={item._id} className="py-3 flex justify-between items-center">
                 <div>
                   <div className="font-medium text-gray-500">{item.name}</div>
-                  <div className="text-sm text-gray-900">Qty: {item.qty} • Price: ₹{item.price}</div>
+                  <div className="text-sm text-gray-900">Qty: {item.qty} • Price: ₹{item.price} • Value:{""}
+                    <span className="font-mono">
+                      ₹{(item.qty * item.price).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
                 <div className="space-x-2">
                   <button onClick={() => handleDelete(item._id)}
